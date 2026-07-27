@@ -441,7 +441,7 @@ function speakFallback(text){
 }
 function speakLine(text,btnEl){
   if(btnEl)btnEl.classList.add('speaking');
-  fetch('/api/tutor/speak',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:text,language:'fr'})})
+  fetch('https://kingcretot.com/api/tutor/speak',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text:text,language:'fr'})})
     .then(function(res){if(!res.ok)throw new Error('speak HTTP '+res.status);return res.blob();})
     .then(function(blob){
       var audio=new Audio(URL.createObjectURL(blob));

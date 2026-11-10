@@ -183,9 +183,11 @@ body.show-fr .fr-gloss{display:block}
 .hud-lang:hover{background:#F7ECEE}
 .hud-lang.on{background:var(--maroon);color:#fff}
 .home-lang{display:inline-flex;align-items:center;gap:10px;margin:2px auto 4px;
-  font-weight:800;font-size:16px;color:#C9D2E8;cursor:pointer;background:rgba(255,255,255,.06);
-  border:1.5px solid rgba(224,172,60,.4);border-radius:999px;padding:10px 22px}
-.home-lang b{color:var(--gold)}
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:17px;color:#C9A84C;cursor:pointer;background:transparent;
+  border:2px solid #C9A84C;border-radius:999px;padding:10px 24px;transition:background .15s,color .15s}
+.home-lang b{color:inherit}
+.home-lang.on{background:#C9A84C;color:#0A1F3D}
+.home-lang:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .namebox{max-width:560px;margin:26px auto 4px;background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:18px 20px}
 .namebox label{color:var(--navy);font-size:18px}
 .namebox input{font-family:'Nunito',sans-serif;font-size:19px;padding:10px 14px;border:2px solid var(--navy);border-radius:12px;margin:8px 0 4px;width:100%;max-width:360px}
@@ -213,6 +215,7 @@ body.show-fr .fr-gloss{display:block}
     <div class="eyebrow"><span>Français Conversationnel</span></div>
     <h1>Parlez avec assurance</h1>
     <p class="center" style="margin:14px 0 6px"><span class="levelpill">Niveau A1–A2 · Débutant</span></p>
+    <p class="center" style="margin:6px 0 16px"><button type="button" class="home-lang" id="homelang" aria-pressed="true">🇺🇸 <b>English is on</b> · Tap to hide</button></p>
     <p class="center" style="color:#C9D2E8;font-size:20px;max-width:640px;margin:0 auto">
       Un programme complet de 12 leçons pour toute personne qui veut apprendre le français de tous les jours. Deux fois par semaine
       pendant 6 semaines, ou une fois par semaine pendant 12 semaines — chaque leçon fonctionne dans les deux cas.
@@ -220,7 +223,6 @@ body.show-fr .fr-gloss{display:block}
   </div>
   <div class="namebox center"><label for="stuName"><b>Ton prénom et ton nom</b></label> <input id="stuName" autocomplete="name" placeholder="ex. : Marie Dupont"><p class="nametip">Tes résultats sont envoyés à ton instructeur KCE.</p><span class="fr-gloss">Your first and last name, so your instructor sees your results.</span><p class="namewarn" id="nameWarn" hidden>Écris ton prénom et ton nom avant de commencer une leçon.</p></div>
   <div id="menu"></div>
-  <p class="center" style="margin:2px 0 20px"><span class="home-lang" id="homelang">🇺🇸 <b>Besoin d'aide en anglais&nbsp;?</b> Touchez pour afficher l'anglais</span></p>
   <div class="footerline" style="color:#7d88a3;border-color:var(--line)">
     KingCretot Experience · kce@kingcretot.com · 914.809.0112 · www.kingcretot.com
   </div>
@@ -643,12 +645,12 @@ function applyFR(on){
     lb.innerHTML=on?'\uD83C\uDDFA\uD83C\uDDF8 English ✓':'\uD83C\uDDFA\uD83C\uDDF8 English';}
   var hl=document.getElementById('homelang');
   if(hl){hl.innerHTML=on
-    ?'\uD83C\uDDFA\uD83C\uDDF8 <b>Aide en anglais activ\u00e9e</b> · Touchez pour masquer'
-    :'\uD83C\uDDFA\uD83C\uDDF8 <b>Besoin d\'aide en anglais&nbsp;?</b> Touchez pour afficher l\'anglais';}
+    ?'\uD83C\uDDFA\uD83C\uDDF8 <b>English is on</b> · Tap to hide'
+    :'\uD83C\uDDFA\uD83C\uDDF8 <b>English</b> · Tap to show English';hl.classList.toggle('on',on);hl.setAttribute('aria-pressed',on?'true':'false');}
   try{localStorage.setItem('kce_fr',on?'1':'0');}catch(e){}
 }
 function toggleFR(){applyFR(!document.body.classList.contains('show-fr'));}
-(function(){var on=false;try{on=localStorage.getItem('kce_fr')==='1';}catch(e){}applyFR(on);})();
+(function(){var on=true;try{on=localStorage.getItem('kce_fr')!=='0';}catch(e){}applyFR(on);})();
 
 renderMenu();
 })();
